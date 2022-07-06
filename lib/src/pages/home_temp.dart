@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class HomePageTemp extends StatelessWidget {
-  final options = ['Uno', 'Dos', 'Tres', 'Cuatro', 'Cindo'];
+  final people = ['Adriel', 'Dylan', 'Dwayne', 'Maria', 'Yoma'];
 
   @override
   Widget build(BuildContext context) {
@@ -16,21 +16,21 @@ class HomePageTemp extends StatelessWidget {
   }
 
   List<Widget> _createItems() {
-    List<Widget> list = <Widget>[];
-
-    for (String option in options) {
-      final tempWidget = ListTile(
-        title: Text(option),
+    return people.map((opt) {
+      return Column(
+        children: [
+          ListTile(
+            leading: const Icon(Icons.perm_contact_cal_sharp),
+            title: Text(opt),
+            subtitle: const Text('Info de prueba'),
+            trailing: const Icon(Icons.navigate_next_sharp),
+            onTap: () {}, // da por defecto el efecto de clic
+          ),
+          const Divider(
+            color: Color.fromARGB(73, 222, 15, 15),
+          )
+        ],
       );
-
-      // .. cascade operator
-      list
-        ..add(tempWidget)
-        ..add(const Divider(
-          color: Color.fromARGB(73, 222, 15, 15),
-        ));
-    }
-
-    return list;
+    }).toList();
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:components/src/providers/menu_provider.dart';
+import 'package:components/src/utils/icon_string_util.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -16,7 +17,8 @@ class HomePage extends StatelessWidget {
   Widget _list() {
     return FutureBuilder(
       future: menuProvider.cargarData(),
-      initialData: [],
+      // initialData información por defecto si no se resuelve el future.
+      // initialData: const [],
       builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
         return ListView(
           children: _listItems(snapshot.data),
@@ -30,9 +32,8 @@ class HomePage extends StatelessWidget {
 
     data?.forEach((opt) {
       final widgetTemp = ListTile(
+        leading: getIcon(opt['icon']),
         title: Text(opt['texto']),
-        leading: const Icon(Icons.account_box,
-            color: Color.fromRGBO(108, 181, 241, 1)),
         trailing: const Icon(Icons.arrow_circle_right_outlined,
             color: Color(0xFF6CB5F1)),
         onTap: () {},

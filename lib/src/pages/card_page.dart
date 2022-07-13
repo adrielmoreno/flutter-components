@@ -22,13 +22,15 @@ class CardPage extends StatelessWidget {
 
   Widget _cardTipo1() {
     return Card(
+      elevation: 5,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Column(
         children: <Widget>[
           const ListTile(
             leading: Icon(Icons.photo_album, color: Colors.blue),
             title: Text('Primera tarjeta'),
             subtitle: Text(
-                'sjflajslfjlasjflalsdflañsdfjklñadsjdfñasjkdflñajsdflñkjaldsfjalsfjklañsdfj'),
+                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s.'),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -44,20 +46,23 @@ class CardPage extends StatelessWidget {
 
   Widget _cardTipo2() {
     return Card(
+        clipBehavior: Clip.antiAlias,
+        elevation: 5,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Column(
-      children: <Widget>[
-        const FadeInImage(
-          placeholder: AssetImage('assets/loading.gif'),
-          image: NetworkImage(
-              'https://img.freepik.com/premium-vector/meadows-landscape-with-mountains-hill_104785-943.jpg?w=2000'),
-          fadeOutDuration: Duration(seconds: 2),
-          height: 240.0,
-          fit: BoxFit.cover,
-        ),
-        Container(
-            padding: const EdgeInsets.all(10.0),
-            child: const Text('Imagen de muestra'))
-      ],
-    ));
+          children: <Widget>[
+            const FadeInImage(
+              placeholder: AssetImage('assets/loading.gif'),
+              image: NetworkImage(
+                  'https://img.freepik.com/premium-vector/meadows-landscape-with-mountains-hill_104785-943.jpg?w=2000'),
+              fadeOutDuration: Duration(seconds: 2),
+              height: 240.0,
+              fit: BoxFit.cover,
+            ),
+            Container(
+                padding: const EdgeInsets.all(10.0),
+                child: const Text('Imagen de muestra'))
+          ],
+        ));
   }
 }

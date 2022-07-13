@@ -11,7 +11,11 @@ class CardPage extends StatelessWidget {
       ),
       body: ListView(
         padding: const EdgeInsets.all(10),
-        children: <Widget>[_cardTipo1()],
+        children: <Widget>[
+          _cardTipo1(),
+          const SizedBox(height: 30.0),
+          _cardTipo2()
+        ],
       ),
     );
   }
@@ -36,5 +40,24 @@ class CardPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Widget _cardTipo2() {
+    return Card(
+        child: Column(
+      children: <Widget>[
+        const FadeInImage(
+          placeholder: AssetImage('assets/loading.gif'),
+          image: NetworkImage(
+              'https://img.freepik.com/premium-vector/meadows-landscape-with-mountains-hill_104785-943.jpg?w=2000'),
+          fadeOutDuration: Duration(seconds: 2),
+          height: 240.0,
+          fit: BoxFit.cover,
+        ),
+        Container(
+            padding: const EdgeInsets.all(10.0),
+            child: const Text('Imagen de muestra'))
+      ],
+    ));
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class ListPage extends StatefulWidget {
@@ -13,6 +15,8 @@ class _ListPageState extends State<ListPage> {
   final List<int> _listaNumeros = [];
   int _ultimoItem = 0;
 
+  bool _isloading = false;
+
   @override
   void initState() {
     super.initState();
@@ -21,9 +25,17 @@ class _ListPageState extends State<ListPage> {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        _agregar10();
+        fetchData();
       }
     });
+  }
+
+  // ignore: todo
+  // TODO: Important!!!. kill controller on page exit
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
   }
 
   @override
@@ -32,7 +44,9 @@ class _ListPageState extends State<ListPage> {
       appBar: AppBar(
         title: const Text('Listas'),
       ),
-      body: _crearLista(),
+      body: Stack(
+        children: [_crearLista(), _crearLoading()],
+      ),
     );
   }
 
@@ -56,5 +70,42 @@ class _ListPageState extends State<ListPage> {
       _listaNumeros.add(_ultimoItem);
     }
     setState(() {});
+  }
+
+  Future fetchData() async {
+    _isloading = true;
+    setState(() {});
+    const duration = Duration(seconds: 2);
+    return Timer(duration, respuestaHTTP);
+  }
+
+  void respuestaHTTP() {
+    _isloading = false;
+    _scrollController.animateTo(_scrollController.position.pixels + 100,
+        duration: const Duration(milliseconds: 250),
+        curve: Curves.fastOutSlowIn);
+    _agregar10();
+  }
+
+  Widget _crearLoading() {
+    if (_isloading) {
+      return Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              CircularProgressIndicator(),
+            ],
+          ),
+          const SizedBox(
+            height: 15.0,
+          )
+        ],
+      );
+    } else {
+      return Container();
+    }
   }
 }

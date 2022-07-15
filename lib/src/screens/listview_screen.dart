@@ -2,14 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-class ListPage extends StatefulWidget {
-  const ListPage({Key? key}) : super(key: key);
+class ListScreen extends StatefulWidget {
+  const ListScreen({Key? key}) : super(key: key);
 
   @override
-  State<ListPage> createState() => _ListPageState();
+  State<ListScreen> createState() => _ListScreenState();
 }
 
-class _ListPageState extends State<ListPage> {
+class _ListScreenState extends State<ListScreen> {
   final ScrollController _scrollController = ScrollController();
 
   final List<int> _listaNumeros = [];
@@ -31,7 +31,7 @@ class _ListPageState extends State<ListPage> {
   }
 
   // ignore: todo
-  // TODO: Important!!!. kill controller on page exit
+  // TODO: Important!!!. kill controller on screen exit
   @override
   void dispose() {
     super.dispose();
@@ -52,7 +52,7 @@ class _ListPageState extends State<ListPage> {
 
   Widget _crearLista() {
     return RefreshIndicator(
-      onRefresh: refreshPage,
+      onRefresh: refreshScreen,
       child: ListView.builder(
         controller: _scrollController,
         itemCount: _listaNumeros.length,
@@ -67,7 +67,7 @@ class _ListPageState extends State<ListPage> {
     );
   }
 
-  Future<void> refreshPage() async {
+  Future<void> refreshScreen() async {
     const duration = Duration(seconds: 2);
 
     Timer(duration, () {

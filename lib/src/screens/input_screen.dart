@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class InputPage extends StatefulWidget {
-  const InputPage({Key? key}) : super(key: key);
+class InputScreen extends StatefulWidget {
+  const InputScreen({Key? key}) : super(key: key);
 
   @override
-  State<InputPage> createState() => _InputPageState();
+  State<InputScreen> createState() => _InputScreenState();
 }
 
-class _InputPageState extends State<InputPage> {
+class _InputScreenState extends State<InputScreen> {
   String _nombre = '';
   String _email = '';
   String _fecha = '';
@@ -56,10 +56,7 @@ class _InputPageState extends State<InputPage> {
           hintText: 'Nombre',
           label: const Text('Usuario:'),
           helperText: 'Sólo el nombre de usuario',
-          suffix: const Icon(
-            Icons.accessibility,
-            color: Colors.blue,
-          ),
+          suffix: const Icon(Icons.accessibility),
           icon: const Icon(Icons.account_circle)),
       onChanged: (value) {
         setState(() {
@@ -84,10 +81,7 @@ class _InputPageState extends State<InputPage> {
               borderRadius: BorderRadius.all(Radius.circular(20.0))),
           hintText: 'Email',
           label: Text('Email:'),
-          suffix: Icon(
-            Icons.alternate_email,
-            color: Colors.blue,
-          ),
+          suffix: Icon(Icons.alternate_email),
           icon: Icon(Icons.mark_email_unread_outlined)),
       onChanged: (value) => setState(() {
         _email = value;
@@ -104,10 +98,7 @@ class _InputPageState extends State<InputPage> {
               borderRadius: BorderRadius.all(Radius.circular(20.0))),
           hintText: 'Password',
           label: Text('Password:'),
-          suffix: Icon(
-            Icons.password,
-            color: Colors.blue,
-          ),
+          suffix: Icon(Icons.password),
           icon: Icon(Icons.lock_outline)),
       onChanged: (value) {},
     );
@@ -122,10 +113,7 @@ class _InputPageState extends State<InputPage> {
               borderRadius: BorderRadius.all(Radius.circular(20.0))),
           hintText: 'Fecha de nacimiento',
           label: Text('Fecha de nacimiento:'),
-          suffix: Icon(
-            Icons.date_range,
-            color: Colors.blue,
-          ),
+          suffix: Icon(Icons.date_range),
           icon: Icon(Icons.calendar_month)),
       onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());

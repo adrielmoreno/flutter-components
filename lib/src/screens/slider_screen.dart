@@ -1,13 +1,14 @@
+import 'package:components/src/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
-class SliderPage extends StatefulWidget {
-  const SliderPage({Key? key}) : super(key: key);
+class SliderScreen extends StatefulWidget {
+  const SliderScreen({Key? key}) : super(key: key);
 
   @override
-  State<SliderPage> createState() => _SliderPageState();
+  State<SliderScreen> createState() => _SliderScreenState();
 }
 
-class _SliderPageState extends State<SliderPage> {
+class _SliderScreenState extends State<SliderScreen> {
   double _valorSlider = 100.0;
   bool _bloquearCheck = false;
   @override
@@ -32,7 +33,7 @@ class _SliderPageState extends State<SliderPage> {
 
   Widget _crearSlider() {
     return Slider(
-        activeColor: Colors.indigoAccent,
+        activeColor: AppTheme.primary,
         value: _valorSlider,
         min: 10.0,
         max: 400.0,
@@ -56,6 +57,7 @@ class _SliderPageState extends State<SliderPage> {
 
   Widget _crearCheckBox() {
     return CheckboxListTile(
+        activeColor: AppTheme.primary,
         title: const Text('Bloquear slider'),
         value: _bloquearCheck,
         onChanged: (valor) {
@@ -74,6 +76,7 @@ class _SliderPageState extends State<SliderPage> {
 
   Widget _crearSwitch() {
     return SwitchListTile(
+        activeColor: AppTheme.primary,
         title: const Text('Bloquear slider'),
         value: _bloquearCheck,
         onChanged: (valor) {

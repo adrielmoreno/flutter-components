@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'package:components/src/routes/routes.dart';
-import 'package:components/src/pages/alert_page.dart';
+import 'package:components/src/theme/app_theme.dart';
+import 'package:components/src/routes/app_routes.dart';
 
 void main() => runApp(const MyApp());
 
@@ -12,20 +12,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Components App',
+      debugShowCheckedModeBanner: false,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
       ],
       supportedLocales: const [Locale('en', 'US'), Locale('es', 'ES')],
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      routes: getRoutes(),
-      // route undefined
-      onGenerateRoute: (RouteSettings settings) {
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const AlertPage());
-      },
+      title: 'Components App',
+      initialRoute: AppRoutes.initialRoute,
+      routes: AppRoutes.getAppRoutes(),
+      // route default
+      onGenerateRoute: AppRoutes.generateDefaultRoute,
+      theme: AppTheme.lightTheme,
     );
   }
 }

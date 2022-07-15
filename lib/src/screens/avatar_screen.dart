@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class AvatarPage extends StatelessWidget {
-  const AvatarPage({Key? key}) : super(key: key);
+class AvatarScreen extends StatelessWidget {
+  const AvatarScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Avatar page'),
+        title: const Text('Avatar screen'),
         actions: <Widget>[
           const CircleAvatar(
             backgroundImage: NetworkImage(

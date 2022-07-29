@@ -8,7 +8,7 @@ class AvatarScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Avatar screen'),
-        actions: <Widget>[
+        actions: [
           const CircleAvatar(
             backgroundImage: NetworkImage(
                 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Robert_Downey%2C_Jr._2012.jpg/245px-Robert_Downey%2C_Jr._2012.jpg'),
@@ -17,6 +17,7 @@ class AvatarScreen extends StatelessWidget {
             margin: const EdgeInsets.only(right: 10.0),
             child: const CircleAvatar(
               backgroundColor: Colors.white,
+              foregroundColor: Color.fromARGB(255, 208, 28, 28),
               child: Text('TS'),
             ),
           )

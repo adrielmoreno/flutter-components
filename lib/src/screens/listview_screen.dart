@@ -12,7 +12,8 @@ class ListScreen extends StatefulWidget {
 class _ListScreenState extends State<ListScreen> {
   final ScrollController _scrollController = ScrollController();
 
-  final List<int> _listaNumeros = [];
+  final List<int> imagesIds = [];
+
   int _ultimoItem = 0;
 
   bool _isloading = false;
@@ -20,7 +21,7 @@ class _ListScreenState extends State<ListScreen> {
   @override
   void initState() {
     super.initState();
-    _agregar10();
+    _agregar5();
 
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
@@ -31,7 +32,7 @@ class _ListScreenState extends State<ListScreen> {
   }
 
   // ignore: todo
-  // TODO: Important!!!. kill controller on screen exit
+  // Important!!!. kill controller on screen exit
   @override
   void dispose() {
     super.dispose();
@@ -41,9 +42,6 @@ class _ListScreenState extends State<ListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Listas'),
-      ),
       body: Stack(
         children: [_crearLista(), _crearLoading()],
       ),
@@ -52,37 +50,43 @@ class _ListScreenState extends State<ListScreen> {
 
   Widget _crearLista() {
     return RefreshIndicator(
-      onRefresh: refreshScreen,
-      child: ListView.builder(
-        controller: _scrollController,
-        itemCount: _listaNumeros.length,
-        itemBuilder: (BuildContext context, int index) {
-          final imagen = _listaNumeros[index];
-          return FadeInImage(
-              placeholder: const AssetImage('assets/loading.gif'),
-              image:
-                  NetworkImage('https://picsum.photos/500/300?random=$imagen'));
-        },
-      ),
-    );
+        onRefresh: refreshScreen,
+        child: MediaQuery.removePadding(
+          context: context,
+          removeTop: true,
+          removeBottom: true,
+          child: ListView.builder(
+            // mismo efecto al terminar el scroll en ios o android
+            physics: const BouncingScrollPhysics(),
+            controller: _scrollController,
+            itemCount: imagesIds.length,
+            itemBuilder: (BuildContext context, int index) {
+              final imagen = imagesIds[index];
+              return FadeInImage(
+                  placeholder: const AssetImage('assets/loading.gif'),
+                  image: NetworkImage(
+                      'https://picsum.photos/500/300?random=$imagen'));
+            },
+          ),
+        ));
   }
 
   Future<void> refreshScreen() async {
     const duration = Duration(seconds: 2);
 
     Timer(duration, () {
-      _listaNumeros.clear();
+      imagesIds.clear();
       _ultimoItem++;
-      _agregar10();
+      _agregar5();
     });
 
     return Future.delayed(duration);
   }
 
-  void _agregar10() {
-    for (var i = 0; i < 10; i++) {
+  void _agregar5() {
+    for (var i = 0; i < 5; i++) {
       _ultimoItem++;
-      _listaNumeros.add(_ultimoItem);
+      imagesIds.add(_ultimoItem);
     }
     setState(() {});
   }
@@ -99,7 +103,7 @@ class _ListScreenState extends State<ListScreen> {
     _scrollController.animateTo(_scrollController.position.pixels + 100,
         duration: const Duration(milliseconds: 250),
         curve: Curves.fastOutSlowIn);
-    _agregar10();
+    _agregar5();
   }
 
   Widget _crearLoading() {
@@ -107,7 +111,7 @@ class _ListScreenState extends State<ListScreen> {
       return Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
+        children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
@@ -115,7 +119,7 @@ class _ListScreenState extends State<ListScreen> {
             ],
           ),
           const SizedBox(
-            height: 15.0,
+            height: 40.0,
           )
         ],
       );

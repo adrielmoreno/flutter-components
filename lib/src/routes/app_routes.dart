@@ -7,18 +7,13 @@ class AppRoutes {
 
   static final menuOptions = <MenuOption>[
     MenuOption(
-        route: "home",
-        icon: Icons.add_alert,
-        name: "Home",
-        screen: const HomeScreen()),
-    MenuOption(
         route: "alert",
         icon: Icons.add_alert,
         name: "Alertas",
         screen: const AlertScreen()),
     MenuOption(
         route: "avatar",
-        icon: Icons.accessibility,
+        icon: Icons.supervised_user_circle_outlined,
         name: "Avatars",
         screen: const AvatarScreen()),
     MenuOption(
@@ -27,10 +22,10 @@ class AppRoutes {
         name: "Cards - Tarjetas",
         screen: const CardScreen()),
     MenuOption(
-        route: "animatedContainer",
+        route: "animatedScreen",
         icon: Icons.donut_large,
         name: "Animated Container",
-        screen: const AnimatedContainerScreen()),
+        screen: const AnimatedScreen()),
     MenuOption(
         route: "inputs",
         icon: Icons.input,
@@ -44,12 +39,14 @@ class AppRoutes {
     MenuOption(
         route: "list",
         icon: Icons.tune,
-        name: "Listas y Scroll",
+        name: "ListView - InfiniteScroll",
         screen: const ListScreen()),
   ];
 
   static Map<String, Widget Function(BuildContext)> getAppRoutes() {
     Map<String, Widget Function(BuildContext)> appRoutes = {};
+
+    appRoutes.addAll({'home': (BuildContext context) => const HomeScreen()});
 
     for (final option in menuOptions) {
       appRoutes.addAll({option.route: (BuildContext context) => option.screen});
@@ -63,8 +60,8 @@ class AppRoutes {
   //   'alert': (BuildContext context) => const AlertScreen(),
   //   'avatar': (BuildContext context) => const AvatarScreen(),
   //   'card': (BuildContext context) => const CardScreen(),
-  //   'animatedContainer': (BuildContext context) =>
-  //       const AnimatedContainerScreen(),
+  //   'animatedScreen': (BuildContext context) =>
+  //       const AnimatedScreen(),
   //   'inputs': (BuildContext context) => const InputScreen(),
   //   'slider': (BuildContext context) => const SliderScreen(),
   //   'list': (BuildContext context) => const ListScreen(),

@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AlertScreen extends StatelessWidget {
@@ -12,7 +15,9 @@ class AlertScreen extends StatelessWidget {
       body: Center(
           child: ElevatedButton(
               child: const Text('Mostar Alerta'),
-              onPressed: () => _showAlert(context))),
+              onPressed: () => Platform.isAndroid
+                  ? alertAndroid(context)
+                  : alertIOS(context))),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.arrow_back_outlined),
         onPressed: () {
@@ -22,7 +27,7 @@ class AlertScreen extends StatelessWidget {
     );
   }
 
-  void _showAlert(BuildContext context) {
+  void alertAndroid(BuildContext context) {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -50,6 +55,40 @@ class AlertScreen extends StatelessWidget {
                     Navigator.of(context).pop();
                   },
                   child: const Text('Ok')),
+            ],
+          );
+        });
+  }
+
+  void alertIOS(BuildContext context) {
+    showCupertinoDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return CupertinoAlertDialog(
+            title: const Text('Titulo'),
+            content: Column(
+              // Ancho dependerá de sus hijos
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                Text('Contenido de prueba de la Caja'),
+                FlutterLogo(
+                  size: 100,
+                )
+              ],
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Cancelar')),
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text(
+                    'Ok',
+                    style: TextStyle(color: Colors.indigo),
+                  )),
             ],
           );
         });

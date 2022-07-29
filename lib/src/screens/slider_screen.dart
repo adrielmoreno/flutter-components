@@ -17,22 +17,21 @@ class _SliderScreenState extends State<SliderScreen> {
       appBar: AppBar(
         title: const Text('Slider'),
       ),
-      body: Container(
-        padding: const EdgeInsets.only(top: 50.0),
-        child: Column(
-          children: [
-            _crearSlider(),
-            _crearCheckBox(),
-            _crearSwitch(),
-            Expanded(child: _crearImagen())
-          ],
-        ),
+      body: Column(
+        children: [
+          _crearSlider(),
+          _crearCheckBox(),
+          _crearSwitch(),
+          _crearImagen(),
+          const AboutListTile(),
+        ],
       ),
     );
   }
 
   Widget _crearSlider() {
-    return Slider(
+    // adaptative se adapta a la plataforma ios o android
+    return Slider.adaptive(
         activeColor: AppTheme.primary,
         value: _valorSlider,
         min: 10.0,
@@ -47,12 +46,14 @@ class _SliderScreenState extends State<SliderScreen> {
   }
 
   Widget _crearImagen() {
-    return Image(
+    return Expanded(
+        child: SingleChildScrollView(
+            child: Image(
       image: const NetworkImage(
-          'https://www.pngarts.com/files/8/Comic-Batman-PNG-High-Quality-Image.png'),
+          'https://i.pinimg.com/originals/a6/07/30/a607302d6653b2fdde197ef404ea7fe6.png'),
       fit: BoxFit.contain,
       width: _valorSlider,
-    );
+    )));
   }
 
   Widget _crearCheckBox() {
@@ -65,17 +66,10 @@ class _SliderScreenState extends State<SliderScreen> {
             _bloquearCheck = valor!;
           });
         });
-    // return Checkbox(
-    //     value: _bloquearCheck,
-    //     onChanged: (valor) {
-    //       setState(() {
-    //         _bloquearCheck = valor!;
-    //       });
-    //     });
   }
 
   Widget _crearSwitch() {
-    return SwitchListTile(
+    return SwitchListTile.adaptive(
         activeColor: AppTheme.primary,
         title: const Text('Bloquear slider'),
         value: _bloquearCheck,

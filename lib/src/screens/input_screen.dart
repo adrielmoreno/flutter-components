@@ -1,3 +1,4 @@
+import 'package:components/src/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class InputScreen extends StatefulWidget {
@@ -8,99 +9,101 @@ class InputScreen extends StatefulWidget {
 }
 
 class _InputScreenState extends State<InputScreen> {
-  String _nombre = '';
-  String _email = '';
   String _fecha = '';
-  String _opcionSeleccionada = 'Volar';
 
-  final List<String> _poderes = [
-    'Volar',
-    'Rayos X',
-    'Super Aliento',
-    'Super Fuerza'
+  final List<String> roles = [
+    'Admin',
+    'Team Lead',
+    'Senior Developer',
+    'Junior Developer'
   ];
   final TextEditingController _inputDateController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<FormState> myFormKey = GlobalKey<FormState>();
+    final Map<String, String> formValues = {
+      'first_name': '',
+      'last_name': '',
+      'email': '',
+      'password': '',
+      'role': ''
+    };
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Inputs'),
       ),
-      body: ListView(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-        children: <Widget>[
-          _crearInput(),
-          const Divider(),
-          _crearEmail(),
-          const Divider(),
-          _crearPassword(),
-          const Divider(),
-          _crearFecha(context),
-          const Divider(),
-          _crearDropdown(),
-          const Divider(),
-          _crearPersona(),
-        ],
+        child: Form(
+          key: myFormKey,
+          child: Column(
+            children: [
+              CustomInputField(
+                labelText: 'Nombre',
+                hintText: 'Nombre del usuario',
+                formProperty: 'first_name',
+                formValues: formValues,
+              ),
+              const SizedBox(height: 30),
+              CustomInputField(
+                labelText: 'Apellido',
+                hintText: 'Apellido del usuario',
+                formProperty: 'last_name',
+                formValues: formValues,
+              ),
+              const SizedBox(height: 30),
+              CustomInputField(
+                labelText: 'Correo',
+                hintText: 'Correo del usuario',
+                keyboardType: TextInputType.emailAddress,
+                suffixIcon: Icons.alternate_email,
+                icon: Icons.mark_email_unread_outlined,
+                formProperty: 'email',
+                formValues: formValues,
+              ),
+              const SizedBox(height: 30),
+              CustomInputField(
+                obscureText: true,
+                labelText: 'Password',
+                hintText: 'Password del usuario',
+                suffixIcon: Icons.lock_open,
+                icon: Icons.lock_outline,
+                formProperty: 'password',
+                formValues: formValues,
+              ),
+              const SizedBox(height: 30),
+              DropdownButtonFormField(
+                  value: 'Admin',
+                  items: getOptionsDropdwon(),
+                  onChanged: (opt) {
+                    formValues['role'] = opt.toString();
+                  }),
+              const SizedBox(height: 30),
+              _crearFecha(context),
+              const SizedBox(height: 30),
+              ElevatedButton(
+                onPressed: () {
+                  // quitar el teclado
+                  FocusScope.of(context).requestFocus(FocusNode());
+                  if (!myFormKey.currentState!.validate()) {
+                    // ignore: avoid_print
+                    print('Formulario no válido');
+                    return;
+                  }
+                  // valores
+                  // ignore: avoid_print
+                  print(formValues);
+                },
+                child: const SizedBox(
+                  width: double.infinity,
+                  child: Center(child: Text('Guardar')),
+                ),
+              )
+            ],
+          ),
+        ),
       ),
-    );
-  }
-
-  Widget _crearInput() {
-    return TextFormField(
-      // autofocus: true,
-      textCapitalization: TextCapitalization.words,
-      decoration: InputDecoration(
-          border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0))),
-          counter: Text('Letras ${_nombre.length}'),
-          hintText: 'Nombre',
-          label: const Text('Usuario:'),
-          helperText: 'Sólo el nombre de usuario',
-          suffix: const Icon(Icons.accessibility),
-          icon: const Icon(Icons.account_circle)),
-      onChanged: (value) {
-        setState(() {
-          _nombre = value;
-        });
-      },
-    );
-  }
-
-  Widget _crearPersona() {
-    return ListTile(
-      title: Text('Nombre $_nombre'),
-      subtitle: Text('Email: $_email'),
-    );
-  }
-
-  Widget _crearEmail() {
-    return TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      decoration: const InputDecoration(
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0))),
-          hintText: 'Email',
-          label: Text('Email:'),
-          suffix: Icon(Icons.alternate_email),
-          icon: Icon(Icons.mark_email_unread_outlined)),
-      onChanged: (value) => setState(() {
-        _email = value;
-      }),
-    );
-  }
-
-  Widget _crearPassword() {
-    return TextFormField(
-      obscureText: true,
-      keyboardType: TextInputType.visiblePassword,
-      decoration: const InputDecoration(
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0))),
-          hintText: 'Password',
-          label: Text('Password:'),
-          suffix: Icon(Icons.password),
-          icon: Icon(Icons.lock_outline)),
-      onChanged: (value) {},
     );
   }
 
@@ -109,8 +112,6 @@ class _InputScreenState extends State<InputScreen> {
       enableInteractiveSelection: false,
       controller: _inputDateController,
       decoration: const InputDecoration(
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0))),
           hintText: 'Fecha de nacimiento',
           label: Text('Fecha de nacimiento:'),
           suffix: Icon(Icons.date_range),
@@ -141,31 +142,12 @@ class _InputScreenState extends State<InputScreen> {
   List<DropdownMenuItem<String>> getOptionsDropdwon() {
     List<DropdownMenuItem<String>> lista = [];
 
-    for (var poder in _poderes) {
+    for (var role in roles) {
       lista.add(DropdownMenuItem(
-        value: poder,
-        child: Text(poder),
+        value: role,
+        child: Text(role),
       ));
     }
     return lista;
-  }
-
-  Widget _crearDropdown() {
-    return Row(
-      children: <Widget>[
-        const Icon(Icons.select_all),
-        const SizedBox(width: 30.0),
-        Expanded(
-          child: DropdownButton(
-              value: _opcionSeleccionada,
-              items: getOptionsDropdwon(),
-              onChanged: (opt) {
-                setState(() {
-                  _opcionSeleccionada = opt.toString();
-                });
-              }),
-        )
-      ],
-    );
   }
 }
